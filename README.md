@@ -1,7 +1,8 @@
 # numbers-in-bible
 
-קובץ JSON עם כל המספרים בתנ"ך ומופעיהם בתוך הפסוקים
-
+This repository contains json files of all the numbers in the Bible and their occurrences within the verses in bold font.
+(in Hebrew language)
+If you find any mistake, please open up a new issue.
 
 ## Usage
 
