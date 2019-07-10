@@ -1,6 +1,6 @@
 # numbers-in-bible
 
-This repository contains json files of all the numbers in the Bible and their occurrences within the verses in bold font.<br/>
+This repository contains json files of all the numbers in the Bible and their occurrences within the verses, where the words forming the number are enclosed by bold tags.<br/>
 (in Hebrew language)<br/>
 If you find any mistake, please open up a new issue.<br/>
 Thanks
@@ -30,16 +30,41 @@ public interface GithubServiceApi {
     Call<ResponseBody> getJson(@Path("num") int num);
 }
 
-
-//
 private void handleNumberSearching(int number) {
     Retrofit retrofitInstance = RetrofitClientInstanceSearch.getRetrofitInstance();
     GithubServiceApi service = retrofitInstance.create(GithubServiceApi.class);
     Call<ResponseBody> call = service.getJson(number);
 
-    ...
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                try {
+                    String body = response.body().string();
+                    System.out.println(body);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                System.err.println(t.toString());
+            }
+        });
 
 }
+
+/*
+example:
+handleNumberSearching(777)
+get data from:
+https://raw.githubusercontent.com/elfifo4/numbers-in-bible/master/minified/777.json
+and print:
+{"times":1,"verses":[{"b":"בראשית","c":"ה","t":"וַֽיְהִי֙ כׇּל יְמֵי לֶ֔מֶךְ <b>שֶׁ֤בַע<\/b> <b>וְשִׁבְעִים֙<\/b> שָׁנָ֔ה <b>וּשְׁבַ֥ע<\/b> <b>מֵאֹ֖ות<\/b> שָׁנָ֑ה וַיָּמֹֽת","v":"לא"}]}
+ */
+
 ```
 
 
