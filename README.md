@@ -1,5 +1,7 @@
 # numbers-in-bible
 
+https://elfifo4.github.io/numbers-in-bible/
+
 This repository contains json files of all the numbers in the Bible and their occurrences within the verses, where the words forming the number are enclosed by bold tags.<br/>
 (in Hebrew language)<br/>
 If you find any mistake, please open up a new issue.<br/>
