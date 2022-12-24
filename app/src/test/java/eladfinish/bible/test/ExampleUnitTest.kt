@@ -11,13 +11,13 @@ fun main() {
     val bufferedReader = File("$directory/$number$type").bufferedReader(charset = Charsets.UTF_16)
     val inputString = bufferedReader.use { it.readText() }
     println(inputString)
-    println(minify(inputString))
+    println(inputString.minified())
 }
 
-private fun minify(json: String): String {
+private fun String.minified(): String {
     val gson = GsonBuilder()
         .disableHtmlEscaping()
         .create()
-    val element = JsonParser.parseString(json)
+    val element = JsonParser.parseString(this)
     return gson.toJson(element)
 }
