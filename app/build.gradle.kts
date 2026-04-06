@@ -1,19 +1,18 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
     id("maven-publish")
-    id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization") version "1.7.20"
 }
 
 android {
     namespace = "eladfinish.bible.data"
-    compileSdk = 33
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "eladfinish.bible.data"
         minSdk = 26
-        targetSdk = 33
+        //noinspection EditedTargetSdkVersion
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -30,17 +29,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.5.1")
-    implementation("com.google.android.material:material:1.7.0")
+    implementation("androidx.core:core-ktx:1.18.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.google.android.material:material:1.13.0")
+    implementation("com.google.code.gson:gson:2.13.2")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.4")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
-    implementation("com.google.code.gson:gson:2.10")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 }
