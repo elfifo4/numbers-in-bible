@@ -6,7 +6,7 @@ Structure (must all be zero):
   format       BOM, formatted == minified, no \\/ escaping, no trailing newline, key order, times == #verses
   order        verses sorted by the app's book order, chapter, verse; no duplicate verse; known book names
   aggregates   data/all-numbers*.json and all_numbers.js match the number files
-  text         `t` without tags == the app's verse text (qere, makaf, sof pasuk), in the app's numbering
+  text         `t` without tags == the app's verse text (qere, makaf, no final sof pasuk), app numbering
   bold_punct   a makaf / sof pasuk / paseq / space inside <b>…</b>
 
 Content (candidates to review — the detector in numparse.py only knows cardinal numbers):

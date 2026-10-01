@@ -104,11 +104,16 @@ def app_verse(book: int, chapter: int, verse: int):
 
 
 def app_tokens(book: int, chapter: int, verse: int, with_ketiv: bool = False) -> list[str] | None:
-    """The verse as the number files show it: the qere only (unless with_ketiv), makaf kept."""
+    """The verse as the number files show it: the qere only (unless with_ketiv), makaf kept, and **no sof
+    pasuk at the end** — the app appends "׃" to every verse it shows (addGershaimAndColon), so a stored
+    one would be shown twice ("אֶחָד׃׃")."""
     av = app_verse(book, chapter, verse)
     if av is None:
         return None
-    return [t for k, t in av if k != "k" or with_ketiv]
+    tokens = [t for k, t in av if k != "k" or with_ketiv]
+    if tokens:
+        tokens[-1] = tokens[-1].rstrip(SOF_PASUK)
+    return tokens
 
 
 # ---------------------------------------------------------------- verse text <-> words with bold flags

@@ -2,7 +2,7 @@
 """
 Rewrite every verse text `t` from the app's own text (the source of truth), keeping the bold words.
 
-The app's text keeps makaf and sof pasuk and shows the qere only. The bold flags are carried over word
+The app's text keeps makaf, shows the qere only, and drops the final sof pasuk (the app adds it). The bold flags are carried over word
 by word: the file's words and the app's words are aligned by their consonants, and a bolded word maps
 to the app word in the same aligned position (a spelling difference between editions, e.g. מאות/מאת,
 still maps one-to-one). A verse whose bold can't be mapped unambiguously is left untouched and listed.

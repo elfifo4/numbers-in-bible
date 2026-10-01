@@ -10,15 +10,17 @@ for a number search and **shows `t` as is**, highlighting the words wrapped in `
 `master` changes what users see immediately, so **never push without the user's explicit OK**.
 
 ```json
-{"times":2,"verses":[{"b":"עזרא","c":"ב","t":"בְּנֵ֣י שְׁפַטְיָ֔ה <b>שְׁלֹ֥שׁ</b> <b>מֵא֖וֹת</b> <b>שִׁבְעִ֥ים</b> <b>וּשְׁנָֽיִם</b>׃","v":"ד"}, …]}
+{"times":2,"verses":[{"b":"עזרא","c":"ב","t":"בְּנֵ֣י שְׁפַטְיָ֔ה <b>שְׁלֹ֥שׁ</b> <b>מֵא֖וֹת</b> <b>שִׁבְעִ֥ים</b> <b>וּשְׁנָֽיִם</b>","v":"ד"}, …]}
 ```
 
 - `b`: book name exactly as in the app's `BibleCatalog` (שמואל א, דברי הימים ב…). `c`/`v`: Hebrew numerals
   (טו, טז), **in the app's numbering**. `i` (optional, almost always `""`): parsed by the app, not shown.
 - `times` = number of verses (not occurrences). Verses sorted by the app's book order, then chapter, verse.
 - `t` = the verse **exactly as the app's own text** (`BibleContestAndroidApp/shared/src/commonMain/
-  moko-resources/assets/allChapters`): qere only, makaf and sof pasuk kept. Each number word is wrapped
-  separately; makaf, sof pasuk and paseq stay **outside** `<b>` (`<b>שְׁלֹשׁ</b>־<b>מֵא֥וֹת</b>`).
+  moko-resources/assets/allChapters`): qere only, makaf kept, **no sof pasuk at the end** — the app adds
+  "׃" after every verse it shows, so a stored one appears twice ("אֶחָד׃׃"; the 2019 "remove colon from
+  verses" commit was the same fix). Each number word is wrapped separately; makaf and paseq stay
+  **outside** `<b>` (`<b>שְׁלֹשׁ</b>־<b>מֵא֥וֹת</b>`).
 - Files: UTF-16 BE with BOM, no `\/` escaping, no trailing newline, key order `b,c,t,v[,i]`;
   `formatted/` is indent 2, `minified/` compact. `data/all-numbers.json` / `.min.json` (every number in one
   object) and `all_numbers.js` (the website's dropdown) are generated from the number files.
@@ -71,7 +73,7 @@ The scripts expect the app checkout next to this repo (`../BibleContestAndroidAp
 ## Auditing
 
 `audit_numbers.py` checks structure (must be 0): format, order, aggregates in sync, `t` identical to the
-app's text, nothing but letters inside `<b>`. Then content candidates from the detector: a bolded phrase
+app's text (without the final sof pasuk), nothing but letters inside `<b>`. Then content candidates from the detector: a bolded phrase
 with another value, a half-bolded phrase, an unbolded occurrence, verses/values the files don't have.
 Findings reviewed with the user are stored in `scripts/reviewed.json` (key `category|n|ref|text`) and only
 counted; `--save-reviewed` adds all current ones — use it **only after** going through them.
@@ -96,4 +98,6 @@ counted; `--save-reviewed` adds all current ones — use it **only after** going
   cases there in mind when changing it (e.g. 840, 2172, 4500 from "חֲמֵשׁ מֵאוֹת וְאַרְבַּעַת אֲלָפִים", 42360).
 - The app sorts results by book, chapter and verse via gematria (BibleContestMultiPlatformApp PR #210); before
   that it only sorted by book and kept the file's order, so file order still matters for older app versions.
+- After any change to the data, **check it in the app** (number search `#N`): the 2026 unification first
+  kept the final sof pasuk and every result showed "׃׃" — tests and the audit couldn't see that.
 - Keep scripts and caches in the repo, not `/tmp` — macOS cleans `/tmp` and the first audit's scripts were lost.
