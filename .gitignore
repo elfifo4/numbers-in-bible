@@ -4,3 +4,7 @@
 /.gradle/
 /.idea/*
 /build
+.DS_Store
+__pycache__/
+.dicta-cache/
+.claude/skills/bible-numbers/audit-report.txt
